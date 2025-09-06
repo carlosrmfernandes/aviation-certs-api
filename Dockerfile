@@ -1,28 +1,20 @@
-FROM richarvey/nginx-php-fpm:latest
+FROM richarvey/nginx-php-fpm:3.1.6
 
-# Define o diretório de trabalho correto
-WORKDIR /var/www/html
-
-# Copia apenas o código da aplicação para dentro do container
 COPY . .
 
-# Configurações da imagem
+# Image config
 ENV SKIP_COMPOSER 1
 ENV WEBROOT /var/www/html/public
 ENV PHP_ERRORS_STDERR 1
 ENV RUN_SCRIPTS 1
 ENV REAL_IP_HEADER 1
 
-# Configurações do Laravel
-ENV APP_ENV staging
-ENV APP_DEBUG true
+# Laravel config
+ENV APP_ENV production
+ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 
-# Permite rodar o composer como root
+# Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Render precisa expor a porta 10000
-EXPOSE 10000
-
-# Usa o script original da imagem base (não sobrescreve mais)
 CMD ["/start.sh"]
