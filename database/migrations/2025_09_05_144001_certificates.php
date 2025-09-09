@@ -6,24 +6,35 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+
+    public function up()
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
-            $table->string('description')->nullable();
-            $table->string('partNumber')->nullable();
-            $table->string('serialNumber')->unique()->nullable();
-            $table->string('name')->nullable();
-            $table->string('formNumber')->nullable();
-            $table->string('workOrderNumber')->nullable();
-            $table->string('quantity')->nullable();
-            $table->string('status')->nullable();
-            $table->string('remarks')->nullable();
-            $table->string('approval')->nullable();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('approvingAuthority')->default('FAA');
+            $table->string('approvingCountry')->default('United States');
+            $table->string('formTrackingNumber');
+            $table->string('organizationName');
+            $table->string('organizationAddress')->nullable();
+            $table->string('workOrderContractInvoiceNumber')->nullable();
+            $table->text('remarks')->nullable();
+            $table->boolean('conformityApprovedDesign')->default(false);
+            $table->boolean('conformityNonApprovedDesign')->default(false);
+            $table->boolean('returnToService')->default(false);
+            $table->boolean('otherRegulation')->default(false);
+            $table->string('authorizedSignature13')->nullable();
+            $table->string('approvalAuthorizationNo')->nullable();
+            $table->string('authorizedSignature14')->nullable();
+            $table->string('approvalCertificateNo')->nullable();
+            $table->string('name13')->nullable();
+            $table->string('date13')->nullable();
+            $table->string('name14')->nullable();
+            $table->string('date14')->nullable();
             $table->timestamps();
         });
     }
+
 
     public function down(): void
     {
