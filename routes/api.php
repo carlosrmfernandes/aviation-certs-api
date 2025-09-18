@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CertificateController;
 
 Route::prefix('api')->group(function () {
@@ -19,5 +20,8 @@ Route::prefix('api')->group(function () {
             Route::put('/{id}', [CertificateController::class, 'update']);
             Route::delete('/{id}', [CertificateController::class, 'destroy']);
         });
+
+        Route::get('/toggle-state', [SettingsController::class, 'getToggleState']);
+        Route::post('/toggle-state', [SettingsController::class, 'updateToggleState']);
     });
 });
